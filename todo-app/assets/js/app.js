@@ -15,9 +15,11 @@ userSelect.addEventListener("change", (evento) => {
   getAllUsers().then((datos) => {
     for (let i = 0; i < datos.length; i++) {
       if(evento.target.value == i) {
-        // console.log(userContainer.children[1].children[0].children[0]);
+        // userContainer.children[1].children[0].children[0].innerText = datos[i].firstname + " " + datos[i].lastname;
         userName.innerText = datos[i].firstname + " " + datos[i].lastname;
+        // userContainer.children[1].children[1].children[0].innerText = datos[i].email;
         userEmail.innerText = datos[i].email;
+        
         userId = datos[i].id;
         console.log(datos[i]);
       }
@@ -33,12 +35,13 @@ buttonTask.addEventListener("click", () => {
         if(datos[i].completed) {
           task += '<li> <span>'+ datos[i].title +'</span><input type="checkbox" checked> </li>';
         } else {
-          task += '<li> <span>'+ datos[i].title +'</span><input type="checkbox" > </li>';
+          task += '<li> <span>'+ datos[i].title +'</span><input type="checkbox"> </li>';
         }
         
       }
     }
     console.log(task);
+    //taskContainer.children[1].innerHTML = task;
     document.getElementById("tasks").innerHTML = task
   });
 });
