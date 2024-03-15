@@ -13,8 +13,9 @@ let userId = '';
 
 userSelect.addEventListener("change", (evento) => {
   getAllUsers().then((datos) => {
+    console.log(evento.target.value);
     for (let i = 0; i < datos.length; i++) {
-      if(evento.target.value == i) {
+      if(evento.target.value == datos[i].id) {
         // userContainer.children[1].children[0].children[0].innerText = datos[i].firstname + " " + datos[i].lastname;
         userName.innerText = datos[i].firstname + " " + datos[i].lastname;
         // userContainer.children[1].children[1].children[0].innerText = datos[i].email;
@@ -46,6 +47,19 @@ buttonTask.addEventListener("click", () => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () =>{
+  getAllUsers().then((datos) => {
+    for (let i = 0; i < datos.length; i++) {
+      let option = document.createElement("option");
+      option.text = datos[i].firstname;
+      option.value = datos[i].id;
+      userSelect.add(option);
+    }
+    userName.innerText = datos[0].firstname + " " + datos[0].lastname;
+    userEmail.innerText = datos[0].email;
+    userId = datos[0].id;
+  });
+})
 
 
 
