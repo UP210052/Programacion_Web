@@ -12,20 +12,8 @@ let userId = '';
 // Codígo nesesario para mostrar información
 
 userSelect.addEventListener("change", (evento) => {
-  getAllUsers().then((datos) => {
-    console.log(evento.target.value);
-    for (let i = 0; i < datos.length; i++) {
-      if(evento.target.value == datos[i].id) {
-        // userContainer.children[1].children[0].children[0].innerText = datos[i].firstname + " " + datos[i].lastname;
-        userName.innerText = datos[i].firstname + " " + datos[i].lastname;
-        // userContainer.children[1].children[1].children[0].innerText = datos[i].email;
-        userEmail.innerText = datos[i].email;
-        
-        userId = datos[i].id;
-        console.log(datos[i]);
-      }
-    }
-  });
+  getInfoUser(evento.target.value);
+  userTask.innerHTML = "";
 });
 
 buttonTask.addEventListener("click", () => {
@@ -59,9 +47,26 @@ document.addEventListener("DOMContentLoaded", () =>{
     userEmail.innerText = datos[0].email;
     userId = datos[0].id;
   });
+  getInfoUser(userSelect.value);
 })
 
-
+function getInfoUser(id){
+    getAllUsers().then((datos) => {
+        console.log(id);
+        for (let i = 0; i < datos.length; i++) {
+          if(id == datos[i].id) {
+            // userContainer.children[1].children[0].children[0].innerText = datos[i].firstname + " " + datos[i].lastname;
+            userName.innerText = datos[i].firstname + " " + datos[i].lastname;
+            // userContainer.children[1].children[1].children[0].innerText = datos[i].email;
+            userEmail.innerText = datos[i].email;
+            
+            userId = datos[i].id;
+            console.log(datos[i]);
+            break;
+          }
+        }
+    });
+}
 
 // Fin de codígo
 
@@ -71,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () =>{
  * @returns {Promise<User[]>}
  */
 function getAllUsers() {
-  return fetch('/data/usuarios.json')
+  return fetch('http://localhost')
     .then(resp => resp.json());
 }
 
@@ -80,7 +85,7 @@ function getAllUsers() {
  * @returns {Promise<Task[]>}
  */
 function getAllTasks() {
-  return fetch('/data/tareas.json')
+  return fetch('http://localhost/tasks.php')
     .then(resp => resp.json());
 }
 
