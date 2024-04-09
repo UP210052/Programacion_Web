@@ -12,6 +12,7 @@ try {
     $SQL = "INSERT INTO `task` (`id`, `title`, `completed`, `idUser`) VALUES ( {$id}, '{$_POST['title']}', {$completed}, {$_POST['idUser']});";
     echo $SQL;
     $conn ->query($SQL);
+    echo "created task";
 
 } catch (PDOException $e) {
     die($e->getMessage());

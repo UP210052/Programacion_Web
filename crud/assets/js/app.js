@@ -3,7 +3,6 @@ const listTasks = document.getElementById('tasks');
 const form = document.getElementById('form-task');
 const title = document.getElementById('title');
 const completed = document.getElementById('completed');
-const divForm = document.getElementById('divForm');
 const formTitle = document.getElementById('form-title');
 const buttonSumit = document.getElementById('save');
 let idTask;
@@ -54,10 +53,15 @@ form.addEventListener('submit', async (e) => {
     if (buttonSumit.value === 'create') {
         await createTask(fordata);
     } else {
+        console.log(listUsers.value);
         fordata.append("id", idTask);
         await updateTask(fordata);
     }
     await showTasks();
+    formTitle.innerText = 'Insert task';
+    completed.checked = 0;
+    title.value = '';
+    buttonSumit.value = 'create';
 });
 
 listUsers.addEventListener("change", async () => {
@@ -70,7 +74,7 @@ async function getDeleteBtns() {
         button.addEventListener('click', async () => {
             const fordata = new FormData();
             fordata.append("id", button.value);
-            console.log(button.value);
+            // console.log(button.value);
             await deleteTask(fordata);
             await showTasks();
         })
@@ -87,7 +91,7 @@ async function getDeleteBtns() {
             completed.checked = (task[0].completed == 1) ? true : false;
             idTask = task[0].id;
             buttonSumit.value = 'update';
-            console.log(listUsers);
+            // console.log(listUsers);
             await showUsers(task[0].idUser);
             await showTasks();
         })
@@ -99,7 +103,7 @@ async function showTasks() {
     const listUsersUpdate = document.getElementById('users');
     const tasks = await getAllTasks();
     let templateTasks = "";
-    console.log(listUsersUpdate.value);
+    // console.log(listUsersUpdate.value);
     for (const task of tasks) {
         if (listUsersUpdate.value == task.idUser) {
             templateTasks += `
@@ -130,7 +134,9 @@ async function showTasks() {
 
 async function showUsers(selectedUserId = null) {
     const users = await getAllUsers();
-    let templateUsers = listUsers.innerHTML;
+    let templateUsers = `
+        <option selected disabled>Select a User</option>
+        <hr class="border-dark" />`;
     for (const user of users) {
         templateUsers += ` <option value="${user.id}" `;
         
